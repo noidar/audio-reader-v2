@@ -1,4 +1,5 @@
 import React from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { render } from 'react-dom'
 import { createStore, applyMiddleware, compose } from 'redux'
 import { Provider } from 'react-redux'
@@ -8,6 +9,7 @@ import state from './state';
 
 import './components/index.css';
 import App from './components/app/App';
+import Home from './components/home/Home';
 import * as serviceWorker from './serviceWorker';
 
 import rootReducer from './reducers'
@@ -30,7 +32,12 @@ serviceWorker.unregister();
 /* eslint-enable */
 render(
   <Provider store={store}>
-    <App />
+    <Router>
+      <div>
+        <Route path="/" exact component={Home} />
+        <Route path="/books/:id" component={App} />
+      </div>
+    </Router>
   </Provider>,
   document.getElementById('root')
 )

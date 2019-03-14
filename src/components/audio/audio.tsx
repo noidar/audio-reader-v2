@@ -1,19 +1,27 @@
 import React, { Component } from 'react';
 import { PeaksOptions, init, PeaksInstance } from 'peaks.js';
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
+import { RouteComponentProps } from "react-router";
 
-import { AppState, AppAudioType } from '../../reducers/index.t';
+import { AppAudioType } from '../../reducers/index.t';
 
 type DispatchProps = {
 }
 
-type Props = DispatchProps & AppAudioType;
+type PathParamsType = {
+  id: string,
+}
+
+type Props = DispatchProps & AppAudioType & RouteComponentProps<PathParamsType>;
 
 class Audio extends Component<Props, any> {
   peaksInstance: PeaksInstance | null = null;
   canInitAudio: boolean = false;
 
   initAudio() {
+    console.log('aaaaa', this.props.match.params.id);
+
     if (!this.canInitAudio || !this.props.url) {
       return;
     }
@@ -71,7 +79,8 @@ const mapStateToProps = (state: any): AppAudioType => ({ ...state.audio })
 
 const mapDispatchToProps = {};
 
-export default connect<AppAudioType, DispatchProps>(
-  mapStateToProps,
-  mapDispatchToProps
-)(Audio)
+export default withRouter(
+  connect<AppAudioType, DispatchProps>(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Audio))
