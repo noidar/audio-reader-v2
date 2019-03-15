@@ -19,7 +19,7 @@ export interface BookListInterface {
 }
 export interface LoadingMetaInterface {
   isLoading: number,
-  lastLoad: Date | null,
+  lastLoad ?: Date | null,
 }
 
 export interface BookListsInterface {

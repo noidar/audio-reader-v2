@@ -26,21 +26,19 @@ class Home extends Component<PropsType> {
   }
 
   render() {
-    let content;
-    if (this.props.loadingMeta.isLoading) {
-      content = (
-        <LoadingIndicator />
-      )
-    } else {
-      const contentLi = this.props.books.map((el: BookListInterface) => {
-        return <li key={el.id}><Link to={`/books/${el.id}`}>{el.name}</Link></li>
-      });
+    const { loadingMeta, books } = this.props;
 
-      content = <ul>{contentLi}</ul>
-    }
+    const booksListContent = (booksList: any) => booksList.map((el: BookListInterface) => 
+     <li key={el.id}><Link to={`/books/${el.id}`}>{el.name}</Link></li>
+    );
+
+    // for loading I reversed in boolean type, need to find a better solution to track loading indicator
     return (
       <div className="Home">
-        {content}
+       {!!loadingMeta.isLoading && <LoadingIndicator /> }
+       <ul>
+        {books && booksListContent(books)}
+       </ul>
       </div>
     );
   }
